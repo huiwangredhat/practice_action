@@ -12,7 +12,7 @@ jobs:
     - name: Checkout (CTF)
       uses: actions/checkout@v4  # Use the latest version of actions/checkout
       with:
-        repository: huiwangredhat/action_practice
+        repository: huiwangredhat/practice_action
         ref: filter_controls_update
         path: ctf
     - name: Check file existence
