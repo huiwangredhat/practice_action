@@ -33,27 +33,27 @@ jobs:
       with:
         name: controls
         path: controls.json
-    # Step 1: Checkout OSCAL content as the trestlebot lab
-    - name: Checkout OSCAL content
+    # Step 1: Checkout relevant repos
+    - name: Checkout relevant repos
       if: steps.check_files.outputs.files_exists == 'true'
       run: |
         git clone https://github.com/huiwangredhat/trestle-repo.git
         git clone https://github.com/ComplianceAsCode/content.git
         git clone https://github.com/complytime/trestle-bot.git
+    - name: Download artifact
+      uses: actions/download-artifact@v4 #v4 
+      with:
+        name: controls
     - name: Setup trestlebot
       run: |
         cd trestle-bot
         python3.9 -m pip install --no-cache-dir --upgrade pip setuptools
         python3.9 -m pip install --no-cache-dir "poetry==1.7.1"
         poetry install
-    - name: Download artifact
-      uses: actions/download-artifact@v4 #v4 
-      with:
-        name: controls
     - name: Sync catalog
       run: |
-        ls
-        CONTROLS=$(cat controls.json | jq -r '.controls[]')
+        cd trestle-bot
+        CONTROLS=$(cat ../controls.json | jq -r '.controls[]')
         for control in $CONTROLS; do
           policy_id=$(echo "$control" | cut -f1 -d".")
           if [[ "$policy_id" == *"SRG-APP"* ]] || [[ "$policy_id" == *"SRG-OS"* ]]; then
