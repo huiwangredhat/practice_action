@@ -32,46 +32,6 @@ jobs:
         run: |
           python3 -m pip install --upgrade pip
           pip3 install gitpython PyYAML deepdiff Jinja2 xmldiff 
-      # Step 4: Checkout the ComplianceAsCode/content-test-filtering repository
-      - name: Checkout (CTF)
-        uses: actions/checkout@v4  # Use the latest version of actions/checkout
-        with:
-          repository: huiwangredhat/content-test-filtering
-          ref: filter_controls_update
-          path: ctf
-      # Step 5: Detect content changes in the PR
-      - name: Detect content changes in the PR
-        run: |
-          python ctf/content_test_filtering.py pr \
-            --base d2d1faf6db138f649c235af0f701cdfc110a3ffb \
-            --remote_repo https://github.com/ComplianceAsCode/content \
-            --verbose --profile --rule --output json 13176 > output.json
-      - name: Test if there are no content changes
-        run: echo "CTF_OUTPUT_SIZE=$(stat --printf="%s" output.json)" >> $GITHUB_OUTPUT
-        id: ctf
-      - uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808 # v4
-        if: ${{ steps.ctf.outputs.CTF_OUTPUT_SIZE != '0' }}
-        with:
-          name: output
-          path: output.json
-      - name: Print changes to content detected if any
-        if: ${{ steps.ctf.outputs.CTF_OUTPUT_SIZE != '0' }}
-        run: cat output.json
-      - name: Print changes in different Files
-        if: ${{ steps.ctf.outputs.CTF_OUTPUT_SIZE != '0' }}
-        run: |
-          i=1  # Initialize the counter
-          while IFS= read -r line; do
-            # Process each line and output to a file with a dynamic name
-            if echo "$line" | grep -q "rules"; then
-              echo "$line" > "rules${i}.json"
-            elif echo "$line" | grep -q "profiles"; then
-              echo "$line" > "profiles${i}.json"
-            else
-              echo "$line" > "controls.json"
-            fi
-            i=$((i + 1))
-          done < output.json
       - name: Check file existence
         id: check_files
         uses: andstor/file-existence-action@v3
