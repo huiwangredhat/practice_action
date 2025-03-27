@@ -53,7 +53,5 @@ jobs:
         poetry install
     - name: Sync catalog
       run: |
-          ls ../
-          ls ../../
-          echo $(cat ../../controls.json | jq -r '.controls[]')
+          echo $(cat ${{steps.controls.outputs.prop}} | jq -r '.controls[]')
           poetry run trestlebot --help
