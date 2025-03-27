@@ -38,23 +38,11 @@ jobs:
       if: steps.check_files.outputs.files_exists == 'true'
       run: |
         git clone https://github.com/huiwangredhat/trestle-repo.git
-        pwd
-        ls
-    - name: Checkout CaC 
-      if: steps.check_files.outputs.files_exists == 'true'
-      run: |
         git clone https://github.com/ComplianceAsCode/content.git
-        pwd
-        ls ~
-      # Step 2: Checkout trestlebot
-    - name: Checkout trestlebot
-      uses: actions/checkout@v4  # Use the latest version of actions/checkout
-      with:
-        repository: complytime/trestle-bot
+        git clone https://github.com/complytime/trestle-bot.git
     - name: Setup trestlebot
       run: |
-        ls
-        pwd
+        cd trestle-bot
         python3.9 -m pip install --no-cache-dir --upgrade pip setuptools
         python3.9 -m pip install --no-cache-dir "poetry==1.7.1"
         poetry install
@@ -73,10 +61,10 @@ jobs:
           elif [[ "$policy_id" == *"section"* ]]; then
             echo "Section found, setting policy_id to 'cis_ocp_1_4_0'"
             policy_id="cis_ocp_1_4_0"
-            poetry run trestlebot sync-cac-content catalog --dry-run --repo-path ~/trestle-repo --committer-email test@redhat.com --committer-name test --branch main --cac-content-root ~/content --policy-id $policy_id --oscal-catalog $policy_id
+            poetry run trestlebot sync-cac-content catalog --dry-run --repo-path ../trestle-repo --committer-email test@redhat.com --committer-name test --branch main --cac-content-root ../content --policy-id $policy_id --oscal-catalog $policy_id
           else
             echo "Syncing catalog with policy_id: $policy_id"
             poetry run trestlebot --help
           fi
         done
-        ls ~/trestle-repo/catalogs
+        ls ../trestle-repo/catalogs
