@@ -94,7 +94,6 @@ jobs:
     - name: Checkout OSCAL content
       run: |
         git clone https://github.com/huiwangredhat/trestle-repo.git
-        cd ../trestle-repo
         ls
         pwd
     # Step 2: Checkout trestlebot
