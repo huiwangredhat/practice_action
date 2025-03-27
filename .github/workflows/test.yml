@@ -14,9 +14,9 @@ jobs:
       with:
         repository: huiwangredhat/practice_action
     - name: Set up Python 3
-        uses: actions/setup-python@v2
-        with:
-          python-version: '3.9'  # Specify the Python version
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.9'  # Specify the Python version
     - name: Check file existence
       id: check_files
       uses: andstor/file-existence-action@v3
