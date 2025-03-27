@@ -57,8 +57,17 @@ jobs:
     - name: Sync catalog
       run: |
         CONTROLS=$(cat controls.json | jq -r '.controls[]')
-        echo $CONTROLS
         for control in $CONTROLS; do
-          echo ${control}|cut -f1 -d"."
-          poetry run trestlebot --help
+          policy_id=$(echo "$control" | cut -f1 -d".")
+          if [[ "$policy_id" == *"SRG-APP"* ]] || [[ "$policy_id" == *"SRG-OS"* ]]; then
+            policy_id=""
+            echo $policy_id
+          fi
+          if [[ "$policy_id" == *"section"* ]]; then
+            policy_id="cis_ocp_1_4_0"
+            echo $policy_id
+          fi
+          if [[ -n "$policy_id" ]]; then
+            poetry run trestlebot --help
+          fi
         done
