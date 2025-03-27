@@ -87,6 +87,8 @@ jobs:
       - run: echo ${{steps.controls.outputs.prop}}
 
   Sync cac content:
+    runs-on: ubuntu-latest
+    if: 'true'
     steps:
     # Step 1: Checkout OSCAL content as the trestlebot lab
     - name: Checkout OSCAL content
