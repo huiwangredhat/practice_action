@@ -28,27 +28,27 @@ jobs:
         uses: notiz-dev/github-action-json-property@a5a9c668b16513c737c3e1f8956772c99c73f6e8 # v0.2.0
         with:
           path: 'controls.json'
-      - run: echo ${{steps.controls.outputs.prop}}
+    - run: echo ${{steps.controls.outputs.prop}}
       # Step 1: Checkout OSCAL content as the trestlebot lab
-      - name: Checkout OSCAL content
+    - name: Checkout OSCAL content
         if: ${{ steps.ctf.outputs.CTF_OUTPUT_SIZE != '0' }}
         run: |
           git clone https://github.com/huiwangredhat/trestle-repo.git
           ls
           pwd
       # Step 2: Checkout trestlebot
-      - name: Checkout trestlebot
+    - name: Checkout trestlebot
         uses: actions/checkout@v4  # Use the latest version of actions/checkout
         with:
           repository: complytime/trestle-bot
-      - name: Setup trestlebot
+    - name: Setup trestlebot
         run: |
           ls
           pwd
           python3.9 -m pip install --no-cache-dir --upgrade pip setuptools
           python3.9 -m pip install --no-cache-dir "poetry==1.7.1"
           poetry install
-      - name: Sync catalog
+    - name: Sync catalog
         run: |
           ls
           pwd
