@@ -30,9 +30,10 @@ jobs:
       # Step 3: Install Python dependencies
       - name: Install dependencies
         run: |
+          ls
+          pwd
           python3 -m pip install --upgrade pip
           pip3 install gitpython PyYAML deepdiff Jinja2 xmldiff
-          ls
       - name: Check file existence
         id: check_files
         uses: andstor/file-existence-action@v3
