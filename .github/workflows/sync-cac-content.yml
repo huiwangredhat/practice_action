@@ -106,6 +106,10 @@ jobs:
           poetry install
       - name: Sync catalog
         run: |
+          for item in "${${{steps.controls.outputs.prop}}[@]}"
+          do
+            echo "$item"
+          done
           poetry run trestlebot --help
         
      
