@@ -39,11 +39,13 @@ jobs:
       run: |
         git clone https://github.com/huiwangredhat/trestle-repo.git
         pwd
+        ls
     - name: Checkout CaC 
       if: steps.check_files.outputs.files_exists == 'true'
       run: |
         git clone https://github.com/ComplianceAsCode/content.git
         pwd
+        ls
       # Step 2: Checkout trestlebot
     - name: Checkout trestlebot
       uses: actions/checkout@v4  # Use the latest version of actions/checkout
@@ -62,6 +64,7 @@ jobs:
         name: controls
     - name: Sync catalog
       run: |
+        ls
         CONTROLS=$(cat controls.json | jq -r '.controls[]')
         for control in $CONTROLS; do
           policy_id=$(echo "$control" | cut -f1 -d".")
