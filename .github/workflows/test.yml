@@ -54,5 +54,6 @@ jobs:
     - name: Sync catalog
       run: |
           ls ../
-          echo $(cat ../controls.json | jq -r '.controls[]')
+          ls ../../
+          echo $(cat ../../controls.json | jq -r '.controls[]')
           poetry run trestlebot --help
