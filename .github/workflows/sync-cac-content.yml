@@ -85,13 +85,9 @@ jobs:
           path: 'controls.json'
           prop_path: 'controls'
       - run: echo ${{steps.controls.outputs.prop}}
-
-  sync_cac_content:
-    runs-on: ubuntu-latest
-    if: 'true'
-    steps:
     # Step 1: Checkout OSCAL content as the trestlebot lab
     - name: Checkout OSCAL content
+      if: ${{ steps.ctf.outputs.CTF_OUTPUT_SIZE != '0' }}
       run: |
         git clone https://github.com/huiwangredhat/trestle-repo.git
         ls
@@ -103,6 +99,8 @@ jobs:
         repository: complytime/trestle-bot
     - name: Setup trestlebot
       run: |
+        ls
+        pwd
         python3.9 -m pip install --no-cache-dir --upgrade pip setuptools
         python3.9 -m pip install --no-cache-dir "poetry==1.7.1"
         poetry install
