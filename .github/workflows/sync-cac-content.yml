@@ -106,10 +106,8 @@ jobs:
           poetry install
       - name: Sync catalog
         run: |
-          for item in "${${{steps.controls.outputs.prop}}[@]}"
-          do
-            echo "$item"
-          done
+          CONTROLS = $(cat controls.json | jq -r '.controls[]')
+          echo $CONTROLS
           poetry run trestlebot --help
         
      
