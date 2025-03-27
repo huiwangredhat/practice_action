@@ -29,14 +29,10 @@ jobs:
     - name: File exists
       id: controls
       if: steps.check_files.outputs.files_exists == 'true'
-      #uses: notiz-dev/github-action-json-property@a5a9c668b16513c737c3e1f8956772c99c73f6e8 # v0.2.0
-      #with:
-      #  path: 'controls.json'
-      #  prop_path: 'controls'
-      run: |
-        CONTROLS=$(cat controls.json | jq -r '.controls[]')
-        echo $CONTROLS >> $GITHUB_ENV
-    - run: echo ${{steps.controls.outputs.prop}}
+      - uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808 # v4
+        with:
+          name: controls
+          path: controls.json
     # Step 1: Checkout OSCAL content as the trestlebot lab
     - name: Checkout OSCAL content
       if: steps.check_files.outputs.files_exists == 'true'
@@ -54,8 +50,14 @@ jobs:
         python3.9 -m pip install --no-cache-dir --upgrade pip setuptools
         python3.9 -m pip install --no-cache-dir "poetry==1.7.1"
         poetry install
+    - name: Download artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: controls
+          path: controls.json
     - name: Sync catalog
       run: |
+        CONTROLS = $(cat controls.json | jq -r '.controls[]')
         echo $CONTROLS
         for control in $CONTROLS; do
           echo ${control}|cut -f1 -d"."
