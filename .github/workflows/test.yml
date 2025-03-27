@@ -35,7 +35,7 @@ jobs:
       #  prop_path: 'controls'
       run: |
         CONTROLS=$(cat controls.json | jq -r '.controls[]')
-        echo $CONTROLS
+        echo $CONTROLS >> $GITHUB_ENV
     - run: echo ${{steps.controls.outputs.prop}}
     # Step 1: Checkout OSCAL content as the trestlebot lab
     - name: Checkout OSCAL content
