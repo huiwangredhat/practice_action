@@ -56,7 +56,7 @@ jobs:
         name: controls
     - name: Sync catalog
       run: |
-        CONTROLS = $(cat controls.json | jq -r '.controls[]')
+        CONTROLS=$(cat controls.json | jq -r '.controls[]')
         echo $CONTROLS
         for control in $CONTROLS; do
           echo ${control}|cut -f1 -d"."
