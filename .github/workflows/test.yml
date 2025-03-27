@@ -56,7 +56,8 @@ jobs:
         poetry install
     - name: Sync catalog
       run: |
-          for control in $CONTROLS; do
-            echo ${control}|cut -f1 -d"."
-            poetry run trestlebot --help
-          done
+        echo $CONTROLS
+        for control in $CONTROLS; do
+          echo ${control}|cut -f1 -d"."
+          poetry run trestlebot --help
+        done
