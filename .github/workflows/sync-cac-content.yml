@@ -85,28 +85,28 @@ jobs:
           path: 'controls.json'
           prop_path: 'controls'
       - run: echo ${{steps.controls.outputs.prop}}
-    # Step 1: Checkout OSCAL content as the trestlebot lab
-    - name: Checkout OSCAL content
-      if: ${{ steps.ctf.outputs.CTF_OUTPUT_SIZE != '0' }}
-      run: |
-        git clone https://github.com/huiwangredhat/trestle-repo.git
-        ls
-        pwd
-    # Step 2: Checkout trestlebot
-    - name: Checkout trestlebot
-      uses: actions/checkout@v4  # Use the latest version of actions/checkout
-      with:
-        repository: complytime/trestle-bot
-    - name: Setup trestlebot
-      run: |
-        ls
-        pwd
-        python3.9 -m pip install --no-cache-dir --upgrade pip setuptools
-        python3.9 -m pip install --no-cache-dir "poetry==1.7.1"
-        poetry install
-    - name: Sync catalog
-      run: |
-        poetry run trestlebot --help
+      # Step 1: Checkout OSCAL content as the trestlebot lab
+      - name: Checkout OSCAL content
+        if: ${{ steps.ctf.outputs.CTF_OUTPUT_SIZE != '0' }}
+        run: |
+          git clone https://github.com/huiwangredhat/trestle-repo.git
+          ls
+          pwd
+      # Step 2: Checkout trestlebot
+      - name: Checkout trestlebot
+        uses: actions/checkout@v4  # Use the latest version of actions/checkout
+        with:
+          repository: complytime/trestle-bot
+      - name: Setup trestlebot
+        run: |
+          ls
+          pwd
+          python3.9 -m pip install --no-cache-dir --upgrade pip setuptools
+          python3.9 -m pip install --no-cache-dir "poetry==1.7.1"
+          poetry install
+      - name: Sync catalog
+        run: |
+          poetry run trestlebot --help
         
      
       
