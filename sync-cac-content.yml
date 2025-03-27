@@ -92,6 +92,9 @@ jobs:
           git clone https://github.com/huiwangredhat/trestle-repo.git
           ls
           pwd
+      - name: Checkout CaC 
+        run: |
+          git clone https://github.com/ComplianceAsCode/content.git
       # Step 2: Checkout trestlebot
       - name: Checkout trestlebot
         uses: actions/checkout@v4  # Use the latest version of actions/checkout

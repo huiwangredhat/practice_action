@@ -38,6 +38,12 @@ jobs:
       if: steps.check_files.outputs.files_exists == 'true'
       run: |
         git clone https://github.com/huiwangredhat/trestle-repo.git
+        pwd
+    - name: Checkout CaC 
+      if: steps.check_files.outputs.files_exists == 'true'
+      run: |
+        git clone https://github.com/ComplianceAsCode/content.git
+        pwd
       # Step 2: Checkout trestlebot
     - name: Checkout trestlebot
       uses: actions/checkout@v4  # Use the latest version of actions/checkout
@@ -66,7 +72,7 @@ jobs:
             policy_id="cis_ocp_1_4_0"
             poetry run trestlebot --help
           else
-            echo "Processing policy_id: $policy_id"
+            echo "Syncing catalog with policy_id: $policy_id"
             poetry run trestlebot --help
           fi
         done
