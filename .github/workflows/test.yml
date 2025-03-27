@@ -70,9 +70,10 @@ jobs:
           elif [[ "$policy_id" == *"section"* ]]; then
             echo "Section found, setting policy_id to 'cis_ocp_1_4_0'"
             policy_id="cis_ocp_1_4_0"
-            poetry run trestlebot --help
+            poetry run trestlebot sync-cac-content catalog --dry-run --repo-path ../trestle-repo --committer-email test@redhat.com --committer-name test --branch main --cac-content-root ../content --policy-id $policy_id --oscal-catalog $policy_id
           else
             echo "Syncing catalog with policy_id: $policy_id"
             poetry run trestlebot --help
           fi
         done
+        ls ../trestle-repo/catalogs
