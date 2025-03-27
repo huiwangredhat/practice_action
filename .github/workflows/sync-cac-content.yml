@@ -31,7 +31,7 @@ jobs:
       - name: Install dependencies
         run: |
           python3 -m pip install --upgrade pip
-          pip3 install gitpython PyYAML deepdiff Jinja2 xmldiff
+          pip3 install gitpython PyYAML deepdiff Jinja2 xmldiff 
       # Step 4: Checkout the ComplianceAsCode/content-test-filtering repository
       - name: Checkout (CTF)
         uses: actions/checkout@v4  # Use the latest version of actions/checkout
@@ -85,3 +85,31 @@ jobs:
           path: 'controls.json'
           prop_path: 'controls'
       - run: echo ${{steps.controls.outputs.prop}}
+
+  Sync cac content:
+    steps:
+    # Step 1: Checkout OSCAL content as the trestlebot lab
+    - name: Checkout OSCAL content
+      run: |
+        git clone https://github.com/huiwangredhat/trestle-repo.git
+        cd ../trestle-repo
+    # Step 2: Checkout trestlebot
+    - name: Checkout trestlebot
+        uses: actions/checkout@v4  # Use the latest version of actions/checkout
+        with:
+          repository: complytime/trestle-bot
+          path: trestlebot
+    - name: Setup trestlebot
+      run: |
+        python3.9 -m pip install --no-cache-dir --upgrade pip setuptools
+        python3.9 -m pip install --no-cache-dir "poetry==1.7.1"
+        poetry install
+    - name: Sync catalog
+    run: |
+      poetry run trestlebot --help
+        
+     
+      
+
+
+      
