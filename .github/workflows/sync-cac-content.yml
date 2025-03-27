@@ -93,12 +93,13 @@ jobs:
       run: |
         git clone https://github.com/huiwangredhat/trestle-repo.git
         cd ../trestle-repo
+        ls
     # Step 2: Checkout trestlebot
     - name: Checkout trestlebot
-        uses: actions/checkout@v4  # Use the latest version of actions/checkout
-        with:
-          repository: complytime/trestle-bot
-          path: trestlebot
+      uses: actions/checkout@v4  # Use the latest version of actions/checkout
+      with:
+        repository: complytime/trestle-bot
+        path: trestlebot
     - name: Setup trestlebot
       run: |
         python3.9 -m pip install --no-cache-dir --upgrade pip setuptools

@@ -20,6 +20,10 @@ jobs:
       with:
         files: "existfile.txt"
         path: practice_action
+    - name: check path
+      run: |
+        pwd
+        ls
     - name: File exists
       if: steps.check_files.outputs.files_exists == 'true'
       run: echo "It exists !"
