@@ -12,20 +12,8 @@ jobs:
     steps:
     - name: Check if the PR comes from the sync of OSCAL content
       id: check_pr
-      run: |
-        if [[ "${{ github.event.pull_request.merged }}" == "true" ]]; then
-          PR_TITLE="${{ github.event.pull_request.title }}"
-          PR_BODY="${{ github.event.pull_request.body }}"
-            echo "PR Title: $PR_TITLE"
-            echo "PR Body: $PR_BODY"
-          if [[ "$PR_TITLE" == *"Automatic updates from OSCAL content"* ]] || [[ "$PR_BODY" == *"Automatic updates from OSCAL content"* ]]; then
-            echo "The PR comes from OSCAL content. The task of Sync CaC content to OSCAL will exit."
-            echo "Skipping further checks."
-            exit 0
-          else
-            echo "::set-output name=run_job_check_update::true"
-          fi
-         fi
+      run: echo "::set-output name=run_job_check_update::true"
+
   check-cac-content-update:
     runs-on: ubuntu-latest
     needs: check-pr-message
