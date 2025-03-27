@@ -29,10 +29,13 @@ jobs:
     - name: File exists
       id: controls
       if: steps.check_files.outputs.files_exists == 'true'
-      uses: notiz-dev/github-action-json-property@a5a9c668b16513c737c3e1f8956772c99c73f6e8 # v0.2.0
-      with:
-        path: 'controls.json'
-        prop_path: 'controls'
+      #uses: notiz-dev/github-action-json-property@a5a9c668b16513c737c3e1f8956772c99c73f6e8 # v0.2.0
+      #with:
+      #  path: 'controls.json'
+      #  prop_path: 'controls'
+      run: |
+        CONTROLS=$(cat controls.json | jq -r '.controls[]')
+        echo $CONTROLS
     - run: echo ${{steps.controls.outputs.prop}}
     # Step 1: Checkout OSCAL content as the trestlebot lab
     - name: Checkout OSCAL content
@@ -53,5 +56,6 @@ jobs:
         poetry install
     - name: Sync catalog
       run: |
-          echo $(cat ${{steps.controls.outputs.prop}} | jq -r '.controls[]')
-          poetry run trestlebot --help
+          for rule in $CONTROLS; do
+            poetry run trestlebot --help
+          done
