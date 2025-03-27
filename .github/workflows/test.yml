@@ -29,7 +29,7 @@ jobs:
     - name: File exists
       id: controls
       if: steps.check_files.outputs.files_exists == 'true'
-      uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808 # v4
+      uses: actions/upload-artifact@v4 # v4
       with:
         name: controls
         path: controls.json
@@ -51,7 +51,7 @@ jobs:
         python3.9 -m pip install --no-cache-dir "poetry==1.7.1"
         poetry install
     - name: Download artifact
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4 #v4 
       with:
         name: controls
         path: controls.json
