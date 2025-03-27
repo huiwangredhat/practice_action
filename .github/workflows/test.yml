@@ -19,7 +19,6 @@ jobs:
       uses: andstor/file-existence-action@v3
       with:
         files: "existfile.txt"
-        path: practice_action
     - name: check path
       run: |
         pwd
