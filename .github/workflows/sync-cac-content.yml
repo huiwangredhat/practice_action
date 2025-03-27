@@ -19,6 +19,12 @@ jobs:
     needs: check-pr-message
     if: ${{ needs.check-pr-message.outputs.run_job_check_update == 'true' }}
     steps:
+      - name: Install Git
+      run: sudo apt-get update && sudo apt-get install -y git
+      - name: Checkout (practice_action)
+        uses: actions/checkout@v4  # Use the latest version of actions/checkout
+        with:
+          repository: huiwangredhat/practice_action
       # Step 1: Set up Python 3
       - name: Set up Python 3
         uses: actions/setup-python@v2
