@@ -106,7 +106,7 @@ jobs:
           poetry install
       - name: Sync catalog
         run: |
-          CONTROLS = $(cat controls.json | jq -r '.controls[]')
+          CONTROLS = $(cat ../controls.json | jq -r '.controls[]')
           echo $CONTROLS
           poetry run trestlebot --help
         
