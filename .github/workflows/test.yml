@@ -29,10 +29,10 @@ jobs:
     - name: File exists
       id: controls
       if: steps.check_files.outputs.files_exists == 'true'
-      - uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808 # v4
-        with:
-          name: controls
-          path: controls.json
+      uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808 # v4
+      with:
+        name: controls
+        path: controls.json
     # Step 1: Checkout OSCAL content as the trestlebot lab
     - name: Checkout OSCAL content
       if: steps.check_files.outputs.files_exists == 'true'
