@@ -60,14 +60,13 @@ jobs:
         for control in $CONTROLS; do
           policy_id=$(echo "$control" | cut -f1 -d".")
           if [[ "$policy_id" == *"SRG-APP"* ]] || [[ "$policy_id" == *"SRG-OS"* ]]; then
-            policy_id=""
-            echo $policy_id
-          fi
-          if [[ "$policy_id" == *"section"* ]]; then
+            echo "Ignoring SRG-APP and SRG-OS: $policy_id"
+          elif [[ "$policy_id" == *"section"* ]]; then
+            echo "Section found, setting policy_id to 'cis_ocp_1_4_0'"
             policy_id="cis_ocp_1_4_0"
-            echo $policy_id
-          fi
-          if [[ -n "$policy_id" ]]; then
+            poetry run trestlebot --help
+          else
+            echo "Processing policy_id: $policy_id"
             poetry run trestlebot --help
           fi
         done
