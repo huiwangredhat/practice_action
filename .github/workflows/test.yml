@@ -69,9 +69,10 @@ jobs:
         done
     - name: Checkout code into subdirectory
       uses: actions/checkout@v4
-      repository: huiwangredhat/trestle-repo
-          ref: test
-          path: trestle-repo
+      with:
+        repository: huiwangredhat/trestle-repo
+        ref: test
+        path: trestle-repo
     - name: Create Pull Request
       uses: peter-evans/create-pull-request@v5
       with:
