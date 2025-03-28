@@ -69,6 +69,8 @@ jobs:
         done
     - name: Set up working directory
       run: |
+        pwd
+        ls
         cd ../trestle-repo
         ls catalogs
     - name: Create Pull Request
