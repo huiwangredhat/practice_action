@@ -67,5 +67,5 @@ jobs:
             poetry run trestlebot --help
           fi
         done
-        gh pr create --base main --head sync_cac/test --title "Auto PR for test" --body "
+        gh pr create --base main --head sync_cac/test --title "Auto PR for test" --body "test for sync cac"
          
