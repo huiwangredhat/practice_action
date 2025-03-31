@@ -66,6 +66,4 @@ jobs:
             echo "Syncing catalog with policy_id: $policy_id"
             poetry run trestlebot --help
           fi
-        done
-        gh pr create --base main --head sync_cac/test --title "Auto PR for test" --body "test for sync cac"
-         
+        done         
