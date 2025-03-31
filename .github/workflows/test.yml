@@ -61,25 +61,11 @@ jobs:
           elif [[ "$policy_id" == *"section"* ]]; then
             echo "Section found, setting policy_id to 'cis_ocp_1_4_0'"
             policy_id="cis_ocp_1_4_0"
-            poetry run trestlebot sync-cac-content catalog  --repo-path ../trestle-repo --committer-email test@redhat.com --committer-name test --branch test --cac-content-root ../content --policy-id $policy_id --oscal-catalog $policy_id
+            poetry run trestlebot sync-cac-content catalog  --repo-path ../trestle-repo --committer-email test@redhat.com --committer-name sync_cac/test --branch test --cac-content-root ../content --policy-id $policy_id --oscal-catalog $policy_id
           else
             echo "Syncing catalog with policy_id: $policy_id"
             poetry run trestlebot --help
           fi
         done
-    - name: Checkout code into subdirectory
-      uses: actions/checkout@v4
-      with:
-        repository: huiwangredhat/trestle-repo
-        ref: test
-        path: trestle-repo
-    - name: Create Pull Request
-      uses: peter-evans/create-pull-request@v5
-      with:
-        token: ${{ secrets.GITHUB_TOKEN }}
-        branch: test  # Source branch (in the subdirectory)
-        base: main               # Target branch (main)
-        title: "Sync Cac Automatic updates from trestle-bot"   # Customize PR title
-        body: "Description of changes in the specified subdirectory"  # PR description in the subdirectory
-        draft: false 
+        gh pr create --base main --head sync_cac/test --title "Auto PR for test" --body "
          
